@@ -1,0 +1,108 @@
+[gd_scene load_steps=10 format=3 uid="uid://d4a6f2vwkvrtl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_spf25"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_5kmdi"]
+sky_material = SubResource("ProceduralSkyMaterial_spf25")
+
+[sub_resource type="Environment" id="Environment_b7m1x"]
+background_mode = 2
+sky = SubResource("Sky_5kmdi")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_oml2s"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dfxbk"]
+albedo_color = Color(0.317647, 0.388235, 0.929412, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v3si0"]
+material = SubResource("StandardMaterial3D_dfxbk")
+
+[sub_resource type="Animation" id="Animation_ka866"]
+resource_name = "scene"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-4, 2.26964, 9.4492), Vector3(-0.67, 0.755, 1.539)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 4.88692, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cej61"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-4, 2.26964, 9.4492)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cc2we"]
+_data = {
+"RESET": SubResource("Animation_cej61"),
+"scene": SubResource("Animation_ka866")
+}
+
+[node name="world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b7m1x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_oml2s")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_v3si0")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.878817, 0.103276, -0.465848, 0, 0.976296, 0.21644, 0.477159, -0.190211, 0.857986, -4, 2.26964, 9.4492)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cc2we")
+}

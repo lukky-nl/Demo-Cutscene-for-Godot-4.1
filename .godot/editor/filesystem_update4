@@ -1,0 +1,5 @@
+res://scenes/stages/intro.tscn
+res://addons/proton_scatter/demos/assets/materials/m_pine_leaves.tres
+res://addons/proton_scatter/demos/assets/materials/m_bush.tres
+res://addons/proton_scatter/demos/assets/materials/m_grass.tres
+res://scripts/intro.gd
